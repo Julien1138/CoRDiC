@@ -1,0 +1,212 @@
+m255
+K3
+13
+cModel Technology
+Z0 dD:\dev\CoRDiC\ModelSim_Project
+Ecordic
+Z1 w1297972843
+Z2 DPx10 cordic_lib 11 cordic_pack 0 22 >cY9Zh:EhD:Q8KcZFA0W^1
+Z3 DPx4 ieee 9 math_real 0 22 zjAF7SKfg_RPI0GT^n1N`1
+Z4 DPx4 ieee 15 std_logic_arith 0 22 GJbAT?7@hRQU9IQ702DT]2
+Z5 DPx4 ieee 16 std_logic_signed 0 22 <9<Kcl:S52:oW`F]FQhb20
+Z6 DPx4 ieee 11 numeric_std 0 22 =NSdli^?T5OD8;4F<blj<3
+Z7 DPx4 ieee 14 std_logic_1164 0 22 GH1=`jDDBJ=`LM;:Ak`kf2
+Z8 8D:/dev/CoRDiC/Sources/CoRDiC.vhd
+Z9 FD:/dev/CoRDiC/Sources/CoRDiC.vhd
+l0
+L22
+Vg8FZa1HN2@0QGG965_SO=0
+Z10 OX;C;6.4b;39
+32
+Z11 o-work CoRDiC_Lib -2002 -explicit -O0
+Z12 tExplicit 1
+!s100 ?3kgOYm<zeFdBBlBiIe;D2
+Acordic_behavior
+R2
+R3
+R4
+R5
+R6
+R7
+DEx4 work 6 cordic 0 22 g8FZa1HN2@0QGG965_SO=0
+l79
+L45
+VL`3g156Dd]U:NQZYP7Xj43
+R10
+32
+Z13 Mx6 4 ieee 14 std_logic_1164
+Z14 Mx5 4 ieee 11 numeric_std
+Z15 Mx4 4 ieee 16 std_logic_signed
+Z16 Mx3 4 ieee 15 std_logic_arith
+Z17 Mx2 4 ieee 9 math_real
+Z18 Mx1 10 cordic_lib 11 cordic_pack
+R11
+R12
+!s100 NA?NjN7TY0DK?bUFAdX@l0
+Ecordic_atan
+Z19 w1297975828
+R2
+R6
+R7
+Z20 8D:/dev/CoRDiC/Sources/CoRDiC_Atan.vhd
+Z21 FD:/dev/CoRDiC/Sources/CoRDiC_Atan.vhd
+l0
+L20
+V2WNad[`^8@Q6IK[1Y]YlH2
+R10
+32
+R11
+R12
+!s100 d5VKPGk]K;J3:@Tn2G[o`0
+Acordic_atan_behavior
+R2
+R6
+R7
+DEx4 work 11 cordic_atan 0 22 2WNad[`^8@Q6IK[1Y]YlH2
+l73
+L29
+V6L8bcmlLda_6YcAaE3Li]0
+R10
+32
+Z22 Mx3 4 ieee 14 std_logic_1164
+Mx2 4 ieee 11 numeric_std
+R18
+R11
+R12
+!s100 bW70^=5F]:GR9KnAS^PB[1
+Ecordic_kfactorcorrection
+Z23 w1298066378
+R2
+R3
+R4
+R5
+R6
+R7
+Z24 8D:/dev/CoRDiC/Sources/CoRDiC_KFactorCorrection.vhd
+Z25 FD:/dev/CoRDiC/Sources/CoRDiC_KFactorCorrection.vhd
+l0
+L22
+Vk>Z;TBJAQSV0EI82a@mj:3
+R10
+32
+R11
+R12
+!s100 ba1aiF[nRUiij_5^kiS3T3
+Acordic_kfactorcorrection_behavior
+R2
+R3
+R4
+R5
+R6
+R7
+DEx4 work 24 cordic_kfactorcorrection 0 22 k>Z;TBJAQSV0EI82a@mj:3
+l40
+L31
+V_][on]MgSmd`Y8UgR`od52
+!s100 kTL0cVTg6YEbA`ITc^SF32
+R10
+32
+R13
+R14
+R15
+R16
+R17
+R18
+R11
+R12
+Pcordic_pack
+R6
+R7
+w1297981717
+8D:/dev/CoRDiC/Sources/CoRDiC_Pack.vhd
+FD:/dev/CoRDiC/Sources/CoRDiC_Pack.vhd
+l0
+L19
+V>cY9Zh:EhD:Q8KcZFA0W^1
+R10
+32
+Z26 Mx2 4 ieee 14 std_logic_1164
+Mx1 4 ieee 11 numeric_std
+R11
+R12
+!s100 S>2W76FHEJB8l_7DUf0:60
+Ecordic_polartorect
+Z27 w1298067199
+R2
+R3
+R4
+R5
+R6
+R7
+Z28 8D:/dev/CoRDiC/Sources/CoRDiC_PolarToRect.vhd
+Z29 FD:/dev/CoRDiC/Sources/CoRDiC_PolarToRect.vhd
+l0
+L22
+VF0llN87Ym>EIJnFdfOVY93
+!s100 9`oTMJg=EIa1[Pnofz4Fa1
+R10
+32
+R11
+R12
+Acordic_polartorect_behavior
+R2
+R3
+R4
+R5
+R6
+R7
+Z30 DEx4 work 18 cordic_polartorect 0 22 F0llN87Ym>EIJnFdfOVY93
+l56
+L39
+Z31 VEJNL=RfJhIjd@dM_4N:<=1
+Z32 !s100 B:?=bhgPS1o<FKV]@?NzX3
+R10
+32
+R13
+R14
+R15
+R16
+R17
+R18
+R11
+R12
+Ecordic_shiftn
+Z33 w1297682696
+R2
+R3
+R4
+R5
+R6
+R7
+Z34 8D:/dev/CoRDiC/Sources/CoRDiC_ShiftN.vhd
+Z35 FD:/dev/CoRDiC/Sources/CoRDiC_ShiftN.vhd
+l0
+L22
+VKK4o=>5JUd=UWnncmHzi?1
+R10
+32
+R11
+R12
+!s100 >[0PZSFO0XPBKSc8@>AF23
+Acordic_shiftn_behavior
+R2
+R3
+R4
+R5
+R6
+R7
+DEx4 work 13 cordic_shiftn 0 22 KK4o=>5JUd=UWnncmHzi?1
+l38
+L32
+VU65?U`N^MF;B2:g0BRBKY0
+R10
+32
+R13
+R14
+R15
+R16
+R17
+R18
+R11
+R12
+!s100 d_hPo8`kMgG9m]5^E83Gk1
