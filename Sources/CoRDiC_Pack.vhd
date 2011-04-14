@@ -21,6 +21,23 @@ package CoRDiC_Pack is
    type t_CordicState is (Idle, Computing);
    type t_CordicMode  is (Rotation, Vector);
    
+   component CoRDiC_RectToPolar
+      port
+      (
+         clk_i       : in std_logic;         --! Global Clock
+         rst_i       : in std_logic;         --! Global Reset
+         
+         Start_i     : in std_logic;         --! Starts the process
+         Done_o      : out std_logic;        --! '1' when process is finished
+         
+         X_i         : in std_logic_vector;  --! X value
+         Y_i         : in std_logic_vector;  --! Y value
+         
+         Magnitude_o : out std_logic_vector; --! Magnitude
+         Angle_o     : out std_logic_vector  --! Angle
+      );
+   end component;
+   
    component CoRDiC_PolarToRect
       port
       (

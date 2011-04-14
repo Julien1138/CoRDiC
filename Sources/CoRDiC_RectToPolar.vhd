@@ -3,7 +3,7 @@
 -- 
 -- Module Name:    CoRDiC
 --
--- Description:   Polar to Rect mode
+-- Description:   Rect to Polar mode
 --
 -- 
 -- Create Date:    05/12/2010
@@ -18,7 +18,7 @@ use ieee.std_logic_signed.all;
 library CoRDiC_Lib;
 use CoRDiC_Lib.CoRDiC_Pack.all;
 
-entity CoRDiC_PolarToRect is
+entity CoRDiC_RectToPolar is
    port
    (
       clk_i       : in std_logic;         --! Global Clock
@@ -27,30 +27,31 @@ entity CoRDiC_PolarToRect is
       Start_i     : in std_logic;         --! Starts the process
       Done_o      : out std_logic;        --! '1' when process is finished
       
-      Magnitude_i : in std_logic_vector;  --! Magnitude
-      Angle_i     : in std_logic_vector;  --! Angle
+      X_i         : in std_logic_vector;  --! X value
+      Y_i         : in std_logic_vector;  --! Y value
       
-      X_o         : out std_logic_vector; --! X value
-      Y_o         : out std_logic_vector  --! Y value
+      Magnitude_o : out std_logic_vector; --! Magnitude
+      Angle_o     : out std_logic_vector  --! Angle
    );
-end CoRDiC_PolarToRect;
+end CoRDiC_RectToPolar;
 
-architecture CoRDiC_PolarToRect_Behavior of CoRDiC_PolarToRect is
+architecture CoRDiC_RectToPolar_Behavior of CoRDiC_RectToPolar is
    
    signal s_Start : std_logic;
    
-   signal s_RescaledMagnitude : std_logic_vector(Magnitude_i'range);
-   signal s_CordicYInput      : std_logic_vector(Magnitude_i'range) := (others => '0');   -- Dummy
-   signal s_RescaledAngle     : std_logic_vector(Angle_i'high downto 0);
+   signal s_RescaledX      : std_logic_vector(X_i'range);
+   signal s_RescaledY      : std_logic_vector(Y_i'range);
+   signal s_CordicZInput   : std_logic_vector(Angle_o'high downto 0) := (others => '0');   -- Dummy
    
    signal s_CordicDone  : std_logic;
    
-   signal s_CordicX  : std_logic_vector(X_o'range);
-   signal s_CordicY  : std_logic_vector(Y_o'range);
-   signal s_CordicZ  : std_logic_vector(Angle_i'high downto 0);  -- Dummy
+   signal s_CordicX  : std_logic_vector(Magnitude_o'range);
+   signal s_CordicY  : std_logic_vector(Y_i'high downto 0);  -- Dummy
+   signal s_CordicZ  : std_logic_vector(Angle_o'range);
    
-   signal s_RescaledX   : std_logic_vector(X_o'range);
-   signal s_RescaledY   : std_logic_vector(Y_o'range);
+   signal s_RescaledMagnitude : std_logic_vector(Magnitude_o'range);
+   
+   signal s_NegateResult   : std_logic;   -- indique que le resultat doit être décalé de 180°
    
 begin
    
@@ -63,20 +64,23 @@ begin
    begin
       if rst_i = '1' then
          s_Start <= '0';
-         s_RescaledAngle <= (others => '0');
-         s_RescaledMagnitude <= (others => '0');
+         s_NegateResult <= '0';
+         s_RescaledX <= (others => '0');
+         s_RescaledY <= (others => '0');
       elsif rising_edge(clk_i) then
          s_Start <= '0';
          
          if Start_i = '1' then
             s_Start <= '1';
             
-            s_RescaledAngle <= Angle_i(Angle_i'high - 1) & Angle_i(Angle_i'high - 1 downto 0);  -- On remplace le MSB (bit de signe) par le second MSB
-            
-            if Angle_i(Angle_i'high) /= Angle_i(Angle_i'high - 1) then  -- Si l'angle est négatif, on prends son opposé
-               s_RescaledMagnitude <= -Magnitude_i;
+            if X_i(X_i'high) = '0' then   -- Si X est positif
+               s_RescaledX <= X_i;
+               s_RescaledY <= Y_i;
+               s_NegateResult <= '0';
             else
-               s_RescaledMagnitude <= Magnitude_i;
+               s_RescaledX <= -X_i;
+               s_RescaledY <= -Y_i;
+               s_NegateResult <= '1';
             end if;
             
          end if;
@@ -91,15 +95,21 @@ begin
    begin
       if rst_i = '1' then
          Done_o <= '0';
-         X_o <= std_logic_vector(to_unsigned(0, X_o'Length));
-         Y_o <= std_logic_vector(to_unsigned(0, Y_o'Length));
+         Magnitude_o <= std_logic_vector(to_unsigned(0, Magnitude_o'Length));
+         Angle_o <= std_logic_vector(to_unsigned(0, Angle_o'Length));
       elsif rising_edge(clk_i) then
          Done_o <= '0';
          
          if s_CordicDone = '1' then
             Done_o <= '1';
-            X_o <= s_RescaledX;
-            Y_o <= s_RescaledY;
+            Magnitude_o <= s_RescaledMagnitude;
+            
+            if s_NegateResult = '1' then
+               Angle_o <= not s_CordicZ(s_CordicZ'high) & s_CordicZ(s_CordicZ'high - 1 downto 0);
+            else
+               Angle_o <= s_CordicZ;
+            end if;
+            
          end if;
          
       end if;
@@ -109,7 +119,7 @@ begin
    ins_CoRDiC : CoRDiC
    generic map
    (
-      g_Mode   => Rotation
+      g_Mode   => Vector
    )
    port map
    (
@@ -117,28 +127,20 @@ begin
       rst_i    => rst_i,
       Start_i  => s_Start,
       Done_o   => s_CordicDone,
-      X_i      => s_RescaledMagnitude,
-      Y_i      => s_CordicYInput,
-      Z_i      => s_RescaledAngle,
+      X_i      => s_RescaledX,
+      Y_i      => s_RescaledY,
+      Z_i      => s_CordicZInput,
       X_o      => s_CordicX,
       Y_o      => s_CordicY,
       Z_o      => s_CordicZ
    );
    
-   ins_XCorrection : CoRDiC_KFactorCorrection
+   ins_MagnitudeCorrection : CoRDiC_KFactorCorrection
    port map
    (
       Biased_i    => s_CordicX,
       
-      Corrected_o => s_RescaledX
+      Corrected_o => s_RescaledMagnitude
    );
    
-   ins_YCorrection : CoRDiC_KFactorCorrection
-   port map
-   (
-      Biased_i    => s_CordicY,
-      
-      Corrected_o => s_RescaledY
-   );
-   
-end CoRDiC_PolarToRect_Behavior;
+end CoRDiC_RectToPolar_Behavior;
