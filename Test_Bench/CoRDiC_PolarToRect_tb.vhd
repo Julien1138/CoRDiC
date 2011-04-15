@@ -42,15 +42,32 @@ begin
    s_rst <= '0' after 35 ns;
    s_clk <= not s_clk after c_ClkPeriod/2;
    
-   process
+   -- process
+   -- begin
+      -- wait for 100 ns;
+      -- s_Start <= '1';
+      -- s_Magnitude <= X"00008000";
+      -- s_Angle <= X"A000";
+      -- wait for c_ClkPeriod;
+      -- s_Start <= '0';
+      -- wait;
+   -- end process;
+   
+   process(s_rst, s_clk)
    begin
-      wait for 100 ns;
-      s_Start <= '1';
-      s_Magnitude <= X"00008000";
-      s_Angle <= X"A000";
-      wait for c_ClkPeriod;
-      s_Start <= '0';
-      wait;
+      if s_rst = '1' then
+         s_Start <= '1';
+         s_Magnitude <= X"00008000";
+         s_Angle <= X"A000";
+      elsif rising_edge(s_clk) then
+         s_Start <= '0';
+         
+         if s_Done = '1' then
+            s_Start <= '1';
+            s_Angle <= s_Angle + X"100";
+         end if;
+         
+      end if;
    end process;
    
    uut : CoRDiC_PolarToRect
