@@ -44,7 +44,7 @@ end CoRDiC;
 
 architecture CoRDiC_Behavior of CoRDiC is
    
-   constant c_Width  : std_logic_vector := std_logic_vector(to_unsigned(Z_i'length, integer(ceil(log2(real(Z_i'length))))));
+   constant c_Width  : std_logic_vector := std_logic_vector(to_unsigned(Z_i'length - 1, integer(ceil(log2(real(Z_i'length))))));
    
    signal sm_State      : t_CordicState;
    signal s_NextState   : t_CordicState;
@@ -85,7 +85,7 @@ begin
    -- process : StateMachine_Process
    --! State Machine
    --
-   s_NextState <= Idle        when s_Counter = c_Width - 1 else
+   s_NextState <= Idle        when s_Counter = c_Width else
                   Computing   when Start_i = '1' else
                   sm_State;
    StateMachine_Process : process(rst_i, clk_i)
@@ -127,7 +127,7 @@ begin
       elsif rising_edge(clk_i) then
          Done_o <= '0';
       
-         if sm_State = Computing and s_Counter = c_Width - 2 then
+         if sm_State = Computing and s_Counter = c_Width - 1 then
             Done_o <= '1';
          end if;
          
