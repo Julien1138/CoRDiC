@@ -18,6 +18,10 @@ library CoRDiC_Lib;
 use CoRDiC_Lib.CoRDiC_Pack.all;
 
 entity CoRDiC_Synthesis_Wrapper is
+   generic
+   (
+      g_Mode   : t_CordicMode := Rotation
+   );
    port
    (
       clk_i    : in std_logic;         --! Global Clock
@@ -41,6 +45,10 @@ architecture CoRDiC_Synthesis_Wrapper_Behavior of CoRDiC_Synthesis_Wrapper is
 begin
    
    CoRDiC_Synthesis : CoRDiC
+   generic map
+   (
+      g_Mode => Rotation
+   )
    port map
    (
       clk_i    => clk_i,
