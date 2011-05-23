@@ -31,7 +31,7 @@ end CoRDiC_KFactorCorrection;
 architecture CoRDiC_KFactorCorrection_Behavior of CoRDiC_KFactorCorrection is
    
    
-   constant c_CorrectionGeneric  : std_logic_vector(63 downto 0)     := X"4DBA76D421AF3D30";  --X"15141AA0A62D0E80";
+   constant c_CorrectionGeneric  : std_logic_vector(63 downto 0)     := X"4DBA76D421AF3D30";
    constant c_Correction         : std_logic_vector(Biased_i'range)  := c_CorrectionGeneric(63 downto 64-Biased_i'Length);
    
    

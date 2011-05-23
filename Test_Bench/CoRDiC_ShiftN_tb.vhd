@@ -26,7 +26,7 @@ architecture CoRDiC_ShiftN_tb_Behavior of CoRDiC_ShiftN_tb is
    signal s_N     : std_logic_vector(3 downto 0) := "0000";
    
    signal s_iBus  : std_logic_vector(15 downto 0) := "0111111111111111";
-   signal s_oBus  : std_logic_vector(15 downto 0);
+   signal s_oBus  : std_logic_vector(31 downto 0);
    
 begin
    

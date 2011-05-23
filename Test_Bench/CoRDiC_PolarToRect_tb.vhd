@@ -30,7 +30,7 @@ architecture CoRDiC_PolarToRect_tb_Behavior of CoRDiC_PolarToRect_tb is
    signal s_Done  : std_logic;
    
    signal s_Magnitude   : std_logic_vector(31 downto 0);
-   signal s_Angle       : std_logic_vector(15 downto 0);
+   signal s_Angle       : std_logic_vector(31 downto 0);
       
    signal s_X           : std_logic_vector(31 downto 0);
    signal s_Y           : std_logic_vector(31 downto 0);
@@ -57,15 +57,15 @@ begin
    begin
       if s_rst = '1' then
          s_Start <= '1';
-         s_Magnitude <= X"00008000";
-         s_Angle <= X"A000";
+         s_Magnitude <= X"01000000";
+         s_Angle <= X"40000000";
       elsif rising_edge(s_clk) then
          s_Start <= '0';
          
-         if s_Done = '1' then
-            s_Start <= '1';
-            s_Angle <= s_Angle + X"100";
-         end if;
+         -- if s_Done = '1' then
+            -- s_Start <= '1';
+            -- s_Angle <= s_Angle - X"1000";
+         -- end if;
          
       end if;
    end process;
