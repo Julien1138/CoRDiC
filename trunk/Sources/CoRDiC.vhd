@@ -51,13 +51,13 @@ architecture CoRDiC_Behavior of CoRDiC is
    
    signal s_Counter     : std_logic_vector(c_Width'range);
    
-   signal s_XRegister   : std_logic_vector(X_i'range);
-   signal s_YRegister   : std_logic_vector(Y_i'range);
-   signal s_ZRegister   : std_logic_vector(Z_i'range);
+   signal s_XRegister   : std_logic_vector(X_i'high + X_i'length downto 0);
+   signal s_YRegister   : std_logic_vector(Y_i'high + Y_i'length downto 0);
+   signal s_ZRegister   : std_logic_vector(Z_i'high + Z_i'length downto 0);
    
-   signal s_ShiftedX    : std_logic_vector(X_i'range);
-   signal s_ShiftedY    : std_logic_vector(Y_i'range);
-   signal s_AtanZ       : std_logic_vector(Z_i'range);
+   signal s_ShiftedX    : std_logic_vector(X_i'high + X_i'length downto 0);
+   signal s_ShiftedY    : std_logic_vector(Y_i'high + Y_i'length downto 0);
+   signal s_AtanZ       : std_logic_vector(Z_i'high + Z_i'length downto 0);
    
    signal s_AddSub      : std_logic;
    
@@ -145,14 +145,14 @@ begin
       elsif rising_edge(clk_i) then
       
          if Start_i = '1' then
-            s_XRegister <= X_i;
+            s_XRegister(s_XRegister'high downto s_XRegister'high - X_i'high) <= X_i;
          elsif sm_State = Computing then
             s_XRegister <= fn_AddSub(s_XRegister, s_ShiftedY, s_AddSub);
          end if;
          
       end if;
    end process;
-   X_o <= s_XRegister;
+   X_o <= s_XRegister(s_XRegister'high downto s_XRegister'high - X_o'high);
    
    --
    -- process : YRegister_Process
@@ -165,14 +165,14 @@ begin
       elsif rising_edge(clk_i) then
       
          if Start_i = '1' then
-            s_YRegister <= Y_i;
+            s_YRegister(s_YRegister'high downto s_YRegister'high - Y_i'high) <= Y_i;
          elsif sm_State = Computing then
             s_YRegister <= fn_AddSub(s_YRegister, s_ShiftedX, not s_AddSub);
          end if;
          
       end if;
    end process;
-   Y_o <= s_YRegister;
+   Y_o <= s_YRegister(s_YRegister'high downto s_YRegister'high - Y_o'high);
    
    --
    -- process : ZRegister_Process
@@ -185,14 +185,14 @@ begin
       elsif rising_edge(clk_i) then
       
          if Start_i = '1' then
-            s_ZRegister <= Z_i;
+            s_ZRegister(s_ZRegister'high downto s_ZRegister'high - Z_i'high) <= Z_i;
          elsif sm_State = Computing then
             s_ZRegister <= fn_AddSub(s_ZRegister, s_AtanZ, s_AddSub);
          end if;
          
       end if;
    end process;
-   Z_o <= s_ZRegister;
+   Z_o <= s_ZRegister(s_ZRegister'high downto s_ZRegister'high - Z_o'high);
    
    RotationMode_generate :
    if g_Mode = Rotation generate
